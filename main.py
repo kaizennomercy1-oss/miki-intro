@@ -6,8 +6,20 @@ from dotenv import load_dotenv
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
-INTRO_CHANNEL_ID = int(os.getenv('INTRO_CHANNEL_ID', 0))  # Set di .env
-CUSTOM_EMOJI = os.getenv('CUSTOM_EMOJI', '📝')  # Default emoji, bisa diganti dengan emoji custom
+INTRO_CHANNEL_ID_STR = os.getenv('INTRO_CHANNEL_ID', '0')
+CUSTOM_EMOJI = os.getenv('CUSTOM_EMOJI', '📝')
+
+# Validasi TOKEN
+if not TOKEN:
+    print("❌ ERROR: DISCORD_TOKEN tidak ditemukan!")
+    print("Set DISCORD_TOKEN di environment variables atau di .env file")
+    exit()
+
+try:
+    INTRO_CHANNEL_ID = int(INTRO_CHANNEL_ID_STR)
+except ValueError:
+    print("❌ ERROR: INTRO_CHANNEL_ID harus berupa angka!")
+    exit()
 
 intents = discord.Intents.default()
 
